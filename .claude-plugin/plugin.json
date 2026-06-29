@@ -1,0 +1,13 @@
+{
+  "name": "claude-session-bus",
+  "version": "0.1.0",
+  "description": "Broadcast bus for peer Claude Code sessions in one project: a broadcast() MCP tool to send and a UserPromptSubmit hook to receive, over a project-scoped JSONL mailbox.",
+  "author": { "name": "Alex Schick" },
+  "hooks": "./hooks/hooks.json",
+  "mcpServers": {
+    "session-bus": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/server/index.mjs"]
+    }
+  }
+}

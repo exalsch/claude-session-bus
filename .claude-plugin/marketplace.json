@@ -1,0 +1,11 @@
+{
+  "name": "session-bus-dev",
+  "owner": { "name": "Alex Schick" },
+  "plugins": [
+    {
+      "name": "claude-session-bus",
+      "source": "./",
+      "description": "Broadcast bus for peer Claude Code sessions in one project (advisory coordination, locks, handoffs)."
+    }
+  ]
+}
