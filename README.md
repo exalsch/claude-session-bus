@@ -75,8 +75,17 @@ spec) - the fallback is to render own posts tagged "(you)" instead of filtering 
 
 ## Status & next steps
 
-v0.1 scaffold. The one thing to validate before trusting it: **`ppid` correlation on
-Windows** (does the hook's parent PID match the MCP server's?). Everything else is in
-place. Build order and the fallback are in the spec.
+v0.1. The headline risk - **`ppid` correlation on Windows** - was tested and did **not**
+hold: Claude Code spawns the `UserPromptSubmit` hook through a shell, so the hook's
+parent PID is a transient shell, never the directly-spawned MCP server's PID. Sessions
+now correlate on **`CLAUDE_CODE_SESSION_ID`** (an env var both halves inherit from
+`claude.exe`) instead of `process.ppid`, with a `ppid` fallback where that var is
+absent. Verified end-to-end across two live sessions and covered by
+`scripts/test-origin.mjs` (unit) and `scripts/test-drain.mjs` (integration);
+`npm test` runs the full suite.
+
+Out of scope today: **cross-project** messaging. The mailbox lives inside each project
+(`${CLAUDE_PROJECT_DIR}/.claude/.session-bus/`), so only sessions sharing a project root
+bridge. A global bus would need a shared mailbox path plus a `proj` field per message.
 
 This is dev tooling - it must never live inside a product repo.
