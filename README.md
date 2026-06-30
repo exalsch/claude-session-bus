@@ -32,23 +32,30 @@ claude-session-bus/
 
 ## Quick start
 
-1. **Smoke-test the primitives** (no Claude needed):
+1. **Clone the repo:**
 
-   ```powershell
+   ```
+   git clone https://github.com/exalsch/claude-session-bus.git
+   cd claude-session-bus
+   ```
+
+2. **Smoke-test the primitives** (no Claude needed):
+
+   ```
    node scripts/selftest.mjs    # expect: selftest OK - { ... }
    ```
 
-2. **Install as a local plugin**, then enable it:
+3. **Install as a local plugin**, then enable it:
 
    ```
-   /plugin marketplace add C:\PROGRAMMING\claude-session-bus
+   /plugin marketplace add /path/to/claude-session-bus    # the directory you just cloned
    /plugin install claude-session-bus@session-bus-dev
    ```
 
    Restart Claude Code so the MCP server + hook load. Verify the `broadcast` and
    `inbox` tools appear, and that the `session-bus` MCP server is connected.
 
-3. **Use it.** From any session:
+4. **Use it.** From any session:
 
    - `broadcast("holding the dev server on :1420", kind="lock")`
    - `inbox()` to re-read peer messages on demand.
@@ -58,7 +65,7 @@ claude-session-bus/
 
 ## End-to-end test
 
-Open **two** terminals, both `cd` into the *same* project (e.g. `C:\PROGRAMMING\CoTiRe`):
+Open **two** terminals, both `cd` into the *same* project (e.g. `~/projects/your-app`):
 
 1. In session A: ask it to `broadcast("test from A")`.
 2. In session B: submit any prompt. B should report a `[session-bus]` line from A.
