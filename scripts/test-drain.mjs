@@ -46,6 +46,8 @@ try {
   // Session B (a peer) MUST see A's broadcast.
   const bOut = runHook(SID_B);
   assert.ok(bOut.includes('editing dynamics.rs'), "peer session B receives A's broadcast");
+  // ...and the label carries the #<session> suffix so same-branch sessions are distinct.
+  assert.ok(bOut.includes('feat/a#sid-AAAA'), 'rendered label carries the #<session> suffix');
 
   // Session A MUST NOT see its own broadcast (origin self-filter).
   const aOut = runHook(SID_A);

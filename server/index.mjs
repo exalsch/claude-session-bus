@@ -10,7 +10,7 @@
 // If protocol issues ever surface, this can be swapped for @modelcontextprotocol/sdk
 // without touching lib/bus.mjs.
 
-import { appendMessage, readMessages, originId } from '../lib/bus.mjs';
+import { appendMessage, readMessages, originId, formatMessage } from '../lib/bus.mjs';
 
 const SERVER_INFO = { name: 'claude-session-bus', version: '0.1.0' };
 const DEFAULT_PROTOCOL = '2024-11-05';
@@ -118,12 +118,6 @@ function toolResult(id, text, isError = false) {
   result(id, { content: [{ type: 'text', text }], isError });
 }
 
-function fmt(m) {
-  const when = new Date(m.ts).toISOString().slice(11, 16); // HH:MM UTC
-  const tag = m.kind && m.kind !== 'note' ? ` [${m.kind}]` : '';
-  return `- ${when} ${m.from}${tag}: ${m.text}`;
-}
-
 function handleToolCall(id, params) {
   const name = params?.name;
   const args = params?.arguments || {};
@@ -147,7 +141,7 @@ function handleToolCall(id, params) {
       .filter((m) => String(m.origin) !== own)
       .slice(-limit);
     if (!recent.length) return toolResult(id, 'No broadcasts from other sessions in this project.');
-    return toolResult(id, recent.map(fmt).join('\n'));
+    return toolResult(id, recent.map(formatMessage).join('\n'));
   }
 
   return toolResult(id, `Unknown tool: ${name}`, true);

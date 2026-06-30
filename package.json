@@ -12,6 +12,6 @@
   "engines": { "node": ">=18" },
   "scripts": {
     "selftest": "node scripts/selftest.mjs",
-    "test": "node scripts/selftest.mjs && node scripts/test-origin.mjs && node scripts/test-drain.mjs"
+    "test": "node scripts/selftest.mjs && node scripts/test-origin.mjs && node scripts/test-format.mjs && node scripts/test-drain.mjs"
   }
 }
