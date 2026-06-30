@@ -4,8 +4,14 @@
   "description": "Broadcast bus for peer Claude Code sessions in one project (MCP broadcast tool + UserPromptSubmit drain hook).",
   "type": "module",
   "private": true,
+  "license": "GPL-3.0-only",
+  "author": "Alex Schick",
+  "homepage": "https://github.com/exalsch/claude-session-bus#readme",
+  "repository": { "type": "git", "url": "git+https://github.com/exalsch/claude-session-bus.git" },
+  "bugs": { "url": "https://github.com/exalsch/claude-session-bus/issues" },
   "engines": { "node": ">=18" },
   "scripts": {
-    "selftest": "node scripts/selftest.mjs"
+    "selftest": "node scripts/selftest.mjs",
+    "test": "node scripts/selftest.mjs && node scripts/test-origin.mjs && node scripts/test-drain.mjs"
   }
 }
